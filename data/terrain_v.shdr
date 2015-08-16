@@ -1,0 +1,28 @@
+#version 130
+
+in vec3 position;
+in vec3 normal;
+
+uniform mat4 normal_m;
+uniform mat4 modelview_m;
+uniform mat4 projection_m;
+uniform vec2 world_scale;
+
+out vec3 frag_pos;
+out vec2 frag_uv1;
+out vec2 frag_uv2;
+out vec3 frag_normal;
+out float frag_z;
+
+void main() {
+  frag_normal = normalize(mat3(normal_m) * normal);
+  vec4 pos =  modelview_m* vec4(position, 1.0);
+  frag_pos = pos.xyz;
+
+  frag_z = position.z;
+  frag_uv1 = vec2(position.x/world_scale.x,position.y/world_scale.y);
+  frag_uv2 = position.xy *0.05;
+
+  gl_Position = projection_m * pos;
+}
+

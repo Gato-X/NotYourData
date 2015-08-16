@@ -1,0 +1,28 @@
+#version 130
+
+in vec3 position;
+in vec3 normal;
+in vec2 tc;
+
+uniform mat3 normal_m;
+uniform mat4 modelview_m;
+uniform mat4 projection_m;
+uniform mat3 light_m;
+
+uniform vec3 mat_specular_color;
+uniform float mat_specular_exp;
+
+out vec3 frag_pos;
+out vec2 frag_uv;
+out vec3 frag_normal;
+
+void main() {
+	frag_normal = normalize(light_m * normal);
+	vec4 pos =	modelview_m* vec4(position, 1.0);
+	frag_pos = pos.xyz;
+
+	frag_uv = tc;
+
+	gl_Position = projection_m * pos;
+}
+

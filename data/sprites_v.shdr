@@ -1,0 +1,28 @@
+#version 130
+
+in vec3 position;
+in vec2 tc;
+in float alpha;
+
+uniform mat4 modelview_m;
+uniform mat4 projection_m;
+
+out vec2 frag_uv;
+out float frag_alpha;
+
+void main() {
+ 	vec4 pos;
+
+	float a = alpha;
+
+	if (a<0.001)
+		pos = vec4(0.,0.,0.,1.);
+	else
+		pos = modelview_m * vec4(position, 1.0);
+
+  frag_uv = tc;
+  frag_alpha = a;
+
+  gl_Position = projection_m * pos;
+}
+

@@ -1,0 +1,14 @@
+[Main]
+shader:terrain_hq
+height_map:map2_h.png
+texture_map:map2_c.jpg
+detail_map:bumps.jpg
+
+[MapMarkerColors]
+player:0,128,255
+base:0,255,0
+drop_point:255,128,0
+target_point:255,255,0
+enemy_source:255,0,0
+enemy_base:255,0,255
+ 

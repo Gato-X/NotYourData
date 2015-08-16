@@ -1,0 +1,40 @@
+#version 130
+
+const float PI_2 = 1.570796;
+
+in float angle; // corner angle
+in float rand; // int particle number + decimal random number
+in float age; // particle age. Negative value makes the particle wait to spawn
+in vec3 center;
+in vec3 speed;
+
+uniform mat4 modelview_m;
+uniform mat4 projection_m;
+uniform vec3 acceleration;
+uniform vec3 growth; // birth, life and death sizes
+uniform vec2 rotation; // min and max rotation speed
+uniform vec2 easing; // ease in, out, must be >0 and < 0.5
+uniform vec3 params1; // time, do_loop, brightness;
+
+out vec2 frag_uv;
+out float frag_alfa;
+
+void main() {
+	float pt = params1.y>0?fract(max(params1.x+age,0)):params1.x+age; // 0..1 = lifespan of a particle
+
+	float v1 = min(pt,easing.x) / easing.x;
+	float v2 = (1.0-max(pt,1.0-easing.y)) / easing.y;
+
+	frag_alfa = min(v1,v2) * params1.z;
+
+	vec4 pos = modelview_m * vec4(center + speed * pt + acceleration *pt*pt, 1.0);
+
+	frag_uv = vec2(0.5,0.5) + cos(vec2(angle, angle+PI_2)) * 0.5;
+
+	float r = mix(rotation.x, rotation.y, fract(rand))*(pt + 1.0);
+	 
+	pos.xy += cos(vec2(angle+r, angle+r+PI_2)) * mix(growth.y, mix(growth.x, growth.z, v1), 1.0-v2);
+
+	gl_Position = projection_m * pos;
+}
+

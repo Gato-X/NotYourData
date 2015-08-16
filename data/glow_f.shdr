@@ -1,0 +1,13 @@
+#version 130
+
+uniform sampler2D texture0;
+
+in vec2 frag_uv;
+
+out vec4 out_color;
+
+void main() {
+	out_color = texture2D(texture0, frag_uv);
+
+} 
+

@@ -1,0 +1,25 @@
+#version 130
+
+in vec3 position;
+in vec3 normal;
+
+uniform mat4 normal_m;
+uniform mat4 modelview_m;
+uniform mat4 projection_m;
+
+out vec3 frag_normal;
+out vec3 frag_pos;
+out vec3 orig_pos;
+
+void main() {
+  frag_normal = normalize(mat3(normal_m) * normal);
+  vec4 pos =  modelview_m* vec4(position, 1.0);
+  frag_pos = pos.xyz;
+  float c = cos(gl_VertexID);
+  float s = sin(gl_VertexID);
+
+  orig_pos = position;
+
+  gl_Position = projection_m * pos;
+}
+

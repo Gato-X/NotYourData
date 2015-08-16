@@ -1,0 +1,19 @@
+#version 130
+
+uniform float time;
+uniform vec2 resolution;
+
+in vec3 frag_pos;
+in vec3 frag_normal;
+in float frag_z;
+in vec3 orig_pos;
+
+void main() {
+
+  float r = (cos(orig_pos.x*1)+3.0) * 0.25;
+  float g = (cos(orig_pos.y*1)+3.0) * 0.25;
+  float b = (cos(orig_pos.z*1)+3.0) * 0.25;
+
+  gl_FragColor = vec4(r,g,b,1.0);
+} 
+

@@ -1,0 +1,19 @@
+#version 130
+
+uniform float time;
+uniform sampler2D texture0;
+uniform sampler2D texture1;
+
+in vec3 frag_pos;
+in vec2 frag_uv1;
+in vec2 frag_uv2;
+in vec3 frag_normal;
+in float frag_z;
+
+out vec4 out_color;
+
+void main() {
+
+  out_color = texture2D(texture0, frag_uv1) * (0.7 * texture2D(texture1, frag_uv2) + 0.3);
+} 
+
