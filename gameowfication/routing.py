@@ -303,7 +303,7 @@ class Router:
 
         #img.save("filled.png")
 
-        saveMap(self._raster, "reachable.png")
+        #saveMap(self._raster, "reachable.png")
 
 
     def computeAreas(self, depth=8):
